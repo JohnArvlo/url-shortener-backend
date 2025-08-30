@@ -1,23 +1,28 @@
-import Url from '../models/Url.js';
+// src/controllers/urlController.js
+import { createShortUrl, findOriginalUrl } from '../services/urlService.js';
 
 export async function getOriginalUrl(req, res) {
-    const find = await Url.findOne({shortUrl: req.params.shortUrl}); //encuentra uno, solo find retorna mas de uno
-  res.redirect(find.fullUrl);
+  try {
+    const url = await findOriginalUrl(req.params.shortUrl);
+    res.redirect(url.fullUrl);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
 }
 
-export async function createShortUrl(req, res) {
-    console.log("Url: " + req.body.url);
-    
-    const insert = await Url.create({fullUrl: req.body.url})
-    
+export async function createShortUrlController(req, res) {
+  try {
+    const newUrl = await createShortUrl(req.body.url);
     const host = req.get("host");
-    const response = {shortUrl: `http://${host}/${insert.shortUrl}`}; 
 
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify(response));
-
+    res.json({
+      shortUrl: `http://${host}/${newUrl.shortUrl}`,
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 }
 
-export function home(req, res){
-    res.send("Hola mundo");
+export function home(req, res) {
+  res.send("Hola mundo");
 }
