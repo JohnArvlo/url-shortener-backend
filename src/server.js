@@ -33,6 +33,5 @@ app.use("/", urlRoutes);
 
 
 //port
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
-});
+const PORT = process.env.PORT || 3000; // 👈 obligatorio en Azure
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
