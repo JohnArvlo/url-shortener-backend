@@ -11,7 +11,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:5000", // Cambia al puerto de tu server
+        url: process.env.BASE_URL || "http://localhost:3000", 
       },
     ],
   },
