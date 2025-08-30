@@ -18,11 +18,18 @@ app.use(json());
 
 //cors
 // app.use(cors({origin: process.env.FRONTEND_URL})); //frontend url
+// app.use(cors({
+//   origin: [process.env.FRONTEND_URL, process.env.BASE_URL], 
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   allowedHeaders: ["Content-Type", "Authorization"]
+// }));
+
 app.use(cors({
-  origin: [process.env.FRONTEND_URL, process.env.BASE_URL], 
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 
 // ruta swagger UI
